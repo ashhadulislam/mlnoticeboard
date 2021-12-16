@@ -395,7 +395,7 @@ def upload_file():
         frame = cv2.imread(path)
         net,layer_names,output_layers,classes=ppl_counter_helper.setupYOLO()
         frame,count,people_dict=ppl_counter_helper.detect_persons(frame,net,layer_names,output_layers,classes)            
-        print("Number of people = ",count)
+        print("Number of people in frame = ",count)
         return str(count)
 
     
