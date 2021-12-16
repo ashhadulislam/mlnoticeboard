@@ -10,4 +10,5 @@ requests
 plotly
 nltk
 wordcloud
+wget
 opencv-python-headless==3.4.13.47
