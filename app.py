@@ -18,7 +18,7 @@ import plotly.express as px
 from flask import Markup
 
 # do this irrespective of where you are
-ppl_counter_helper.setupYOLO()
+ppl_counter_helper.download_weights()
 # this is to download the weight file
 
 def generate_country_codes():
