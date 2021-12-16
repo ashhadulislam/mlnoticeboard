@@ -16,6 +16,7 @@ def download_weights():
     if not os.path.isfile(os.path.join(yolocation,"yolov3.weights")):    
         print("FIle doesnt exist in download weights, downloading")
         wts_filename = wget.download(weights_url,out=wt_output_directory)
+        print("Weight received")
 
     else:
         print("FIle exists in download weights, not downloading")
