@@ -11,3 +11,4 @@ plotly
 nltk
 wordcloud
 opencv-python-headless
+wget
