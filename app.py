@@ -17,6 +17,10 @@ import json
 import plotly.express as px
 from flask import Markup
 
+# do this irrespective of where you are
+ppl_counter_helper.setupYOLO()
+# this is to download the weight file
+
 def generate_country_codes():
     list_of_country_codes_alpha2=[]
     for country in list(pycountry.countries):
@@ -405,7 +409,7 @@ def upload_file():
 
 if __name__ == '__main__':
     print(list_of_country_codes_alpha2)
-    ppl_counter_helper.setupYOLO()
+
     # run() method of Flask class runs the application
     # on the local development server.
     application.run(host="0.0.0.0",port=5009,debug=True)    
