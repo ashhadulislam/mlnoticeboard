@@ -405,6 +405,7 @@ def upload_file():
 
 if __name__ == '__main__':
     print(list_of_country_codes_alpha2)
+    ppl_counter_helper.setupYOLO()
     # run() method of Flask class runs the application
     # on the local development server.
     application.run(host="0.0.0.0",port=5009,debug=True)    
