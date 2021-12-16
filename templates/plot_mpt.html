@@ -1,0 +1,48 @@
+<script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.6/d3.min.js"></script>
+
+<div class="chart" id="mptTimeGraph">
+    <script>
+        var graphs = {{plot.timeSeries | safe}};
+        Plotly.plot('mptTimeGraph',graphs,{});
+    </script>
+</div>
+
+<div class="chart" id="segmentBarGraph">
+    <script>
+        var graphs = {{plot.segmentBarGraph | safe}};
+        Plotly.plot('segmentBarGraph',graphs,{});
+    </script>
+</div>
+
+
+<div class="chart" id="groupedSegmentBarGraph">
+    <script>
+        var graphs = {{plot.groupedSegmentBarGraph | safe}};
+        Plotly.plot('groupedSegmentBarGraph',graphs,{});
+    </script>
+</div>
+
+<div class="chart" id="dayWisePlot">
+    <script>
+        var graphs = {{plot.dayWisePlot | safe}};
+        Plotly.plot('dayWisePlot',graphs,{});
+    </script>
+</div>
+
+{% if plot.subjectspersegment%}
+
+    {%for i in range(0, plot.subjectspersegment.count)%}
+    	<div class="chart" id="segmentBarGraph{{i}}">
+    	    <script>
+    	        var graphs = {{plot.subjectspersegment.plots[i] | safe}};
+    	        Plotly.plot('segmentBarGraph'+{{i}},graphs,{});
+    	    </script>
+    	</div>
+      
+        
+    {%endfor%}
+{%endif%}
+
+
+
