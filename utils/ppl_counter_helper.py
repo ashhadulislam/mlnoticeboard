@@ -11,8 +11,11 @@ def setupYOLO():
     yolocation=os.path.join(os.getcwd(),"static","yolo_ppl_counter")
     wt_output_directory=os.path.join(yolocation)
     if not os.path.isfile(os.path.join(yolocation,"yolov3.weights")):    
+        print("FIle doesnt exist, downloading")
         wts_filename = wget.download(weights_url,out=wt_output_directory)
+
     else:
+        print("FIle exists, not downloading")
         wts_filename="yolov3.weights"
     net = cv2.dnn.readNet(os.path.join(yolocation,wts_filename)
         , os.path.join(yolocation,"yolov3.cfg"))
