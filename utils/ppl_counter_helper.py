@@ -5,39 +5,41 @@ import numpy as np
 
 
 
-def download_weights():
+# def download_weights():
 
-    # Load Yolo
-    print("DownLOADING YOLO")
-    weights_url="https://pjreddie.com/media/files/yolov3.weights"
+#     # Load Yolo
+#     print("DownLOADING YOLO")
+#     weights_url="https://pjreddie.com/media/files/yolov3.weights"
     
-    yolocation=os.path.join(os.getcwd(),"static","yolo_ppl_counter")
-    wt_output_directory=os.path.join(yolocation)
-    if not os.path.isfile(os.path.join(yolocation,"yolov3.weights")):    
-        print("FIle doesnt exist in download weights, downloading")
-        wts_filename = wget.download(weights_url,out=wt_output_directory)
-        print("Weight received")
+#     yolocation=os.path.join(os.getcwd(),"static","yolo_ppl_counter")
+#     wt_output_directory=os.path.join(yolocation)
+#     if not os.path.isfile(os.path.join(yolocation,"yolov3.weights")):    
+#         print("FIle doesnt exist in download weights, downloading")
+#         wts_filename = wget.download(weights_url,out=wt_output_directory)
+#         print("Weight received")
 
-    else:
-        print("FIle exists in download weights, not downloading")
-        wts_filename="yolov3.weights"
+#     else:
+#         print("FIle exists in download weights, not downloading")
+#         wts_filename="yolov3.weights"
 
 def setupYOLO():
     # Load Yolo
     print("LOADING YOLO")
-    weights_url="https://pjreddie.com/media/files/yolov3.weights"
+    # weights_url="https://pjreddie.com/media/files/yolov3.weights"
     
     yolocation=os.path.join(os.getcwd(),"static","yolo_ppl_counter")
-    wt_output_directory=os.path.join(yolocation)
-    if not os.path.isfile(os.path.join(yolocation,"yolov3.weights")):    
-        print("FIle doesnt exist, downloading")
-        wts_filename = wget.download(weights_url,out=wt_output_directory)
+    # wt_output_directory=os.path.join(yolocation)
+    # if not os.path.isfile(os.path.join(yolocation,"yolov3.weights")):    
+    #     print("FIle doesnt exist, downloading")
+    #     wts_filename = wget.download(weights_url,out=wt_output_directory)
 
-    else:
-        print("FIle exists, not downloading")
-        wts_filename="yolov3.weights"
+    # else:
+    #     print("FIle exists, not downloading")
+    #     wts_filename="yolov3.weights"
+    wts_filename="MobileNetV2-YOLOv3-Lite-coco.weights"
+    config_file_name="MobileNetV2-YOLOv3-Lite-coco.cfg"
     net = cv2.dnn.readNet(os.path.join(yolocation,wts_filename)
-        , os.path.join(yolocation,"yolov3.cfg"))
+        , os.path.join(yolocation,config_file_name))
 
     #save all the names in file o the list classes
     classes = []
