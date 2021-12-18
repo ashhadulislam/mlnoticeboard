@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">  
+</head>
+<body>
+<form  method="post" enctype="multipart/form-data" action="gtrequest_submit">
+
+
+	<div class="form-group">
+	    <label for="exampleInputEmail1">Email address</label>
+	    <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email" name="reqemail">
+	    <small id="emailHelp" class="form-text text-muted">Need this because data will be sent to your email.</small>
+  	</div>
+
+
+  	<div class="form-check">
+	  <input class="form-check-input" type="radio" name="DataCountRadio" id="exampleRadios1" value="single" checked onclick="javascript:singleMultipleCheck();" >
+	  <label class="form-check-label" for="exampleRadios1">
+	    Single Data
+	  </label>
+	</div>
+
+
+	<div class ="form-group check-margin10" id="ifSingle">
+
+		<div class="form-group">
+			<input class="form-control" type="text" placeholder="Search Word" name="searchKeyWord">
+		</div>
+
+		<div class="form-check">
+		  
+		  <input class="form-check-input" type="radio" name="searchType" id="topicType" value="topic" checked>
+		  <label class="form-check-label" for="topicType">
+		    Topic
+		  </label>
+		</div>
+		<div class="form-check">
+		  <input class="form-check-input" type="radio" name="searchType" id="categoryType" value="category">
+		  <label class="form-check-label" for="categoryType">
+		    Category
+		  </label>
+		</div>
+
+
+
+	     <div class="form-group">      
+	       <label for="startDate">Search Start Date</label>  
+	       <input type="date" id="start" name="fromDate"value="2018-07-22"/>        
+	     </div>
+
+	     <div class="form-group">      
+	       <label for="endDate">Search End Date</label>    
+	       <input type="date" id="end" name="toDate"value="2018-07-22"/>        
+	     </div>
+
+
+
+
+	  <div class="form-group">
+	  	Choosing a from date before 5 years from today will give you monthly data.
+	  	Choosing a from date less than 5 years from today will give you weekly data
+
+	  </div>
+
+	  <div class="form-group">
+	  		<label for="regionCode">2 letter region code</label>
+			<input class="form-control" type="text" name="regionCode" value="QA">
+	  </div>
+
+  </div>
+
+
+  <div class="form-check">
+	  <input class="form-check-input" type="radio" name="DataCountRadio" id="exampleRadios2" value="multiple" onclick="javascript:singleMultipleCheck();" >
+	  <label class="form-check-label" for="exampleRadios2">
+	    Multiple Data
+	  </label>
+	  
+  </div>
+
+
+
+  <div class="form-group check-margin10" id="ifMultiple" style="display:none">
+  	Use <a href="https://docs.google.com/spreadsheets/d/e/2PACX-1vRW0RhRcVMH4oAalOB-QRaobVk2ZPLxtmufJOZNczWvMox9e2laxhQrlFh9wXJvVLPlXOnNWLooRRw3/pub?gid=0&single=true&output=csv">this</a> template
+  	
+  	
+
+    <input class="form-control" type="file" name="file1">      
+  </div>
+
+
+  <input class="form-control" type="submit" value="Submit">
+
+
+
+
+  
+</form>
+
+
+<script type="text/javascript">
+
+function singleMultipleCheck() {
+    if (document.getElementById('exampleRadios2').checked) {
+        document.getElementById('ifMultiple').style.display = 'block';
+        document.getElementById('ifSingle').style.display = 'none';
+
+    }
+    else {
+    	document.getElementById('ifMultiple').style.display = 'none';
+    	document.getElementById('ifSingle').style.display = 'block';
+    }
+
+}
+
+</script>
+
+
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+</body>
+</html>

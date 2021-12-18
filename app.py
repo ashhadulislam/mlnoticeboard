@@ -12,10 +12,15 @@ import cv2
 from utils import helper
 from utils import mpt_helper
 from utils import ppl_counter_helper
+from utils import gtrends_helper
 
 import json
 import plotly.express as px
 from flask import Markup
+
+from datetime import datetime
+
+
 
 
 def generate_country_codes():
@@ -400,6 +405,68 @@ def upload_file():
         return str(count)
 
     
+############################################################
+############################################################
+# This part for saving google trends data reuest ###########
+############################################################
+@application.route('/gtrequest')
+def gtrequest():
+    return render_template('gtrends_request_form.html')
+
+@application.route('/gtrequest_submit',methods=["GET","POST"])
+def gtrequest_submit():
+    if request.method == 'POST':
+        # check which radio button was selected
+        dataCount=request.form['DataCountRadio']
+        reqemail=request.form['reqemail']
+        print(dataCount,reqemail)
+        if dataCount=="single":
+            # get data individually
+            print("Geting a single row")
+            searchKeyWord=request.form['searchKeyWord']
+            searchType=request.form['searchType']
+            fromDate=request.form['fromDate']
+            toDate=request.form['toDate']
+            regionCode=request.form['regionCode']
+            print(searchKeyWord,searchType,fromDate,toDate,regionCode)
+            # make a dataframe off this
+            data_dic={}
+            data_dic["interval"]=[fromDate+" "+toDate]
+            data_dic["regionCode"]=[regionCode]            
+            data_dic["searchTerm"]=[searchKeyWord]
+            if searchType=="category":
+                data_dic["isTopic"]=["No"]
+                data_dic["isCategory"]=["Yes"]
+            elif searchType=="topic":
+                data_dic["isTopic"]=["Yes"]
+                data_dic["isCategory"]=["No"]
+            data_dic["Category"]=[None]
+            data_dic["requestorEmail"]=[reqemail]
+            print(data_dic)
+            df=pd.DataFrame(data_dic)
+
+        elif dataCount=="multiple":
+            print("Getting multiple rows")
+            if 'file1' not in request.files:
+                return 'there is no file1 in form!'
+            file1 = request.files['file1']
+            df=pd.read_csv(file1)
+            df=df.fillna("")
+
+        print("THe data is ")
+        # add status and request time
+        now = datetime.now()
+        df["status"]=["I" for i in range(df.shape[0])]
+        df["requestTime"]=[str(now) for i in range(df.shape[0])]
+        print(df.head())
+        gtrends_helper.update_sheet("googleTrendsRequest",df)
+
+        return "Thank you for submitting the request, results will be sent to your mail"
+    return "Stop"
+
+
+
+
 
 
 
