@@ -10,9 +10,9 @@ import os
 import cv2
 
 from utils import helper
-from utils import mpt_helper
+# from utils import mpt_helper
 from utils import ppl_counter_helper
-from utils import gtrends_helper
+# from utils import gtrends_helper
 from utils import retinopathy_helper
 
 
