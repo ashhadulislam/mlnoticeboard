@@ -1,3 +1,4 @@
+-f https://download.pytorch.org/whl/cpu/torch_stable.html
 Flask
 Flask-Cors
 Flask-SQLAlchemy
@@ -14,4 +15,6 @@ opencv-python-headless==3.4.13.47
 gspread
 oauth2client
 pyopenssl
-torch==1.10.2+cpu torchvision==0.11.3+cpu torchaudio==0.10.2+cpu -f https://download.pytorch.org/whl/cpu/torch_stable.html
+torch==1.10.2+cpu 
+torchvision==0.11.3+cpu 
+torchaudio==0.10.2+cpu
