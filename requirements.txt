@@ -15,4 +15,4 @@ opencv-python-headless==3.4.13.47
 gspread
 oauth2client
 pyopenssl
-pytorch
+torch
