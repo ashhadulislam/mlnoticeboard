@@ -13,6 +13,8 @@ from utils import helper
 from utils import mpt_helper
 from utils import ppl_counter_helper
 from utils import gtrends_helper
+from utils import retinopathy_helper
+
 
 import json
 import plotly.express as px
@@ -377,6 +379,33 @@ def notdash():
     bar = create_plot()
     # graphJSON=Markup(graphJSON)
     return render_template('notdash.html', plot=bar)
+
+
+############################################################
+# This part for retina image upload for ####################
+# diabetes detection #######################################
+############################################################
+@application.route('/loadretina')
+def loadretina():
+    return render_template('retina_load_form.html')
+
+@application.route('/retina_image_submit', methods=['GET', 'POST'])
+def retina_image_submit():
+    if request.method == 'POST':
+        if 'file1' not in request.files:
+            return 'there is no file1 in form!'
+        file1 = request.files['file1']
+         
+        path = os.path.join(os.getcwd(),"static","retinopathy", file1.filename)
+        file1.save(path)
+        diabetes_level=retinopathy_helper.predict_diabetes_level(path)
+        # frame = cv2.imread(path)
+        # net,layer_names,output_layers,classes=ppl_counter_helper.setupYOLO()
+        # frame,count,people_dict=ppl_counter_helper.detect_persons(frame,net,layer_names,output_layers,classes)            
+        # print("Number of people in frame = ",count)
+        return str(diabetes_level)
+
+
 
 
 
