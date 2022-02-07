@@ -1,7 +1,7 @@
 from flask import Flask, render_template, request,send_from_directory, jsonify, url_for
 from flask import redirect, make_response
-import plotly
-import plotly.graph_objs as go
+
+
 import numpy as np
 import pycountry
 
@@ -40,26 +40,6 @@ list_of_country_codes_alpha2=generate_country_codes()
 
 application = Flask(__name__)
 
-def create_yearwise_gdp_plot(x_vals,y_vals,country):
-    print(type(x_vals[0]))
-    print(type(y_vals[0]))
-    
-    data = [
-        go.Scatter(
-            x=x_vals, # assign x as the dataframe column 'x'
-            y=y_vals            
-        )
-    ]
-
-    fig = go.Figure(data=data)
- 
-    # title alignment
-    fig.update_layout(title_text='GDP of '+country+" across years")
-
-
-    # graphJSON = json.dumps(data, cls=plotly.utils.PlotlyJSONEncoder)
-    graphJSON = json.dumps(fig, cls=plotly.utils.PlotlyJSONEncoder)
-    return graphJSON
 
 @application.route("/get/mptposts/timeseries/<country_code>")
 def get_mptposts_timeseries(country_code):
@@ -157,42 +137,6 @@ def get_mptposts_weekdaywise(country_code):
         return "No return type specified"
 
 
-@application.route("/show/mptposts/timeseries/<country_code>")
-def show_mptposts_timeseries(country_code):
-    xs,ys=mpt_helper.get_time_series_posts(country_code)
-    xs.reverse()
-    ys.reverse()
-    timeSeriesPlot=mpt_helper.maketime_series_graph(xs,ys)
-    plot={}
-    plot["timeSeries"]=timeSeriesPlot
-
-    return render_template("plot_mpt.html", plot=plot)
-
-
-@application.route("/show/mptposts/segmentcount/<country_code>")
-def show_mptposts_segmentcount(country_code):
-    xs,ys=mpt_helper.get_segment_count(country_code)
-    # xs.reverse()
-    # ys.reverse()
-    barPlot=mpt_helper.make_bar_chart(xs,ys)
-    plot={}
-    plot["segmentBarGraph"]=barPlot
-
-    return render_template("plot_mpt.html", plot=plot)    
-
-
-@application.route("/show/mptposts/groupedsegmentsubject/<country_code>")
-def show_mptposts_grouped_segment_subject(country_code):
-    '''
-    colorful plot showing all subjects per segment in
-    1 graph
-    '''
-    xs,ys,zs=mpt_helper.get_grouped_segment_subject(country_code)    
-    barPlot=mpt_helper.make_grouped_bar_chart(xs,ys,zs)
-    plot={}
-    plot["groupedSegmentBarGraph"]=barPlot
-
-    return render_template("plot_mpt.html", plot=plot)    
 
 
 
@@ -203,102 +147,6 @@ def get_daywise_countplot(country_code):
     dayWisePlot=mpt_helper.maketime_series_graph(xs,ys)
     return dayWisePlot
 
-@application.route("/show/mptposts/weekdaywise/<country_code>")
-def show_mptposts_weekdaywise(country_code):   
-    print("at show_mptposts_weekdaywise function") 
-    plot={}
-    plot["dayWisePlot"]=get_daywise_countplot(country_code)
-
-    return render_template("plot_mpt.html", plot=plot)
-
-
-
-
-
-@application.route("/show/mptposts/subjectspersegment/<country_code>")
-def show_mptposts_subjects_per_segment(country_code):
-    '''
-    multiple plots showing all subjects per segment in
-    multiple graph
-    '''
-    plot=mpt_helper.get_plot_show_mptposts_subjects_per_segment(country_code)
-    '''
-    gives a dict
-    dic:
-        subjectspersegment:
-            plots: [plot1, plot2, ...]
-            count: number
-
-
-    '''
-
-    return render_template("plot_mpt.html", plot=plot)    
-
-
-
-
-
-@application.route("/show/mptposts/allplots/<country_code>")
-def show_mptposts_allplots(country_code):
-    plot={}
-
-    xs,ys=mpt_helper.get_time_series_posts(country_code)
-    xs.reverse()
-    ys.reverse()
-    timeSeriesPlot=mpt_helper.maketime_series_graph(xs,ys)
-    
-    plot["timeSeries"]=timeSeriesPlot
-
-
-    xs,ys=mpt_helper.get_segment_count(country_code)    
-    barPlot=mpt_helper.make_bar_chart(xs,ys)
-    plot["segmentBarGraph"]=barPlot
-
-
-    xs,ys,zs=mpt_helper.get_grouped_segment_subject(country_code)    
-    barPlot=mpt_helper.make_grouped_bar_chart(xs,ys,zs)
-    plot["groupedSegmentBarGraph"]=barPlot
-
-
-    plot_subject_segmentwise=mpt_helper.get_plot_show_mptposts_subjects_per_segment(country_code)
-    '''
-    gives a dict
-    dic:
-        subjectspersegment:
-            plots: [plot1, plot2, ...]
-            count: number
-    '''
-    plot["subjectspersegment"]=plot_subject_segmentwise["subjectspersegment"]
-
-
-    # this one for weekday count
-    plot["dayWisePlot"]=get_daywise_countplot(country_code)
-
-
-    return render_template("plot_mpt.html", plot=plot)    
-
-
-
-
-
-@application.route("/show/annualGDP/<country_code>")
-def show_annual_GDP(country_code):
-    country_code=country_code.upper()
-    print("Country code  =",country_code)
-    if country_code not in list_of_country_codes_alpha2:
-        return "Incorrect country code"
-    country_name=pycountry.countries.get(alpha_2=country_code).name
-    annual_GDP_df=helper.get_csv_Annual_GDP(country_code)
-    print(annual_GDP_df.head())
-    annual_GDP_df = annual_GDP_df.astype({"annualGDP": float})
-
-    years=list(annual_GDP_df["year"])
-    years.reverse()
-    valsf=list(annual_GDP_df["annualGDP"])    
-    valsf.reverse()
-    plot=create_yearwise_gdp_plot(years,valsf,country_name)
-    return render_template("plot.html", plot=plot)
-    
 
 
 
@@ -347,20 +195,7 @@ def homepage():
     return render_template('index.html',data=data)
 
 
-def create_plot():
-    N = 40
-    x = np.linspace(0, 1, N)
-    y = np.random.randn(N)
-    df = pd.DataFrame({'x': x, 'y': y}) # creating a sample dataframe
 
-    data = [
-        go.Bar(
-            x=df['x'], # assign x as the dataframe column 'x'
-            y=df['y']
-        )
-    ]
-    graphJSON = json.dumps(data, cls=plotly.utils.PlotlyJSONEncoder)
-    return graphJSON
 
 @application.route("/another")
 def notdash2():
