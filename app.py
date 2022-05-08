@@ -226,6 +226,7 @@ def loadretina():
     return render_template('retina_load_form.html')
 
 @application.route('/retina_image_submit', methods=['GET', 'POST'])
+@cross_origin()
 def retina_image_submit():
     if request.method == 'POST':
         if 'file1' not in request.files:
