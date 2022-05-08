@@ -1,6 +1,7 @@
 from flask import Flask, render_template, request,send_from_directory, jsonify, url_for
 from flask import redirect, make_response
 
+from flask_cors import CORS
 
 import numpy as np
 import pycountry
@@ -39,6 +40,7 @@ list_of_country_codes_alpha2=generate_country_codes()
 
 
 application = Flask(__name__)
+CORS(application)
 
 
 @application.route("/get/mptposts/timeseries/<country_code>")
@@ -226,7 +228,6 @@ def loadretina():
     return render_template('retina_load_form.html')
 
 @application.route('/retina_image_submit', methods=['GET', 'POST'])
-@cross_origin()
 def retina_image_submit():
     if request.method == 'POST':
         if 'file1' not in request.files:
