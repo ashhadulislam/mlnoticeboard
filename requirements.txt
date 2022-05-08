@@ -5,7 +5,6 @@ Flask-Cors
 Flask-SQLAlchemy
 fuzzywuzzy
 gunicorn
-numpy
 pandas
 pycountry
 requests
