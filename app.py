@@ -257,6 +257,7 @@ def ppl_count():
 
 @application.route('/ppl_counter_submit', methods=['GET', 'POST'])
 def upload_file():
+    print("pplc")
     if request.method == 'POST':
         if 'file1' not in request.files:
             return 'there is no file1 in form!'
