@@ -223,7 +223,6 @@ def notdash():
 # diabetes detection #######################################
 ############################################################
 @application.route('/loadretina')
-@cross_origin()
 def loadretina():
     return render_template('retina_load_form.html')
 
